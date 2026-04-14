@@ -2,6 +2,8 @@ import SwiftUI
 
 struct FlightPickerSheet: View {
     let flights: [ADBFlightResponse]
+    let departureCode: String
+    let searchDate: Date
     let onSelect: (ADBFlightResponse) -> Void
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
@@ -17,6 +19,9 @@ struct FlightPickerSheet: View {
                     VStack(spacing: 6) {
                         Text("\(flights.count) flights found")
                             .font(.subheadline.weight(.semibold))
+                        Text("\(departureCode) · \(formattedDate)")
+                            .font(.caption.weight(.medium))
+                            .foregroundStyle(.secondary)
                         if upcomingCount > 0 {
                             Text("\(upcomingCount) upcoming · Select your flight below")
                                 .font(.caption)
@@ -34,7 +39,7 @@ struct FlightPickerSheet: View {
                         Button {
                             onSelect(flight)
                         } label: {
-                            FlightOptionRow(flight: flight, isUpcoming: isUpcoming(flight))
+                            FlightOptionRow(flight: flight, isUpcoming: isUpcoming(flight), fallbackDepartureCode: departureCode)
                         }
                     }
                 }
@@ -63,11 +68,18 @@ struct FlightPickerSheet: View {
         if let d = df.date(from: timeStr), d > Date() { return true }
         return false
     }
+
+    private var formattedDate: String {
+        let df = DateFormatter()
+        df.dateStyle = .medium
+        return df.string(from: searchDate)
+    }
 }
 
 struct FlightOptionRow: View {
     let flight: ADBFlightResponse
     let isUpcoming: Bool
+    var fallbackDepartureCode: String = "???"
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
@@ -107,7 +119,7 @@ struct FlightOptionRow: View {
 
                 HStack(spacing: 8) {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(flight.departure?.airport?.iata ?? "???")
+                        Text(flight.departure?.airport?.iata ?? fallbackDepartureCode)
                             .font(.headline.weight(.bold))
                         Text(flight.departure?.airport?.municipalityName ?? "")
                             .font(.caption2)

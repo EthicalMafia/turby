@@ -116,7 +116,11 @@ struct HomeView: View {
                 get: { viewModel.showFlightPicker },
                 set: { viewModel.showFlightPicker = $0 }
             )) {
-                FlightPickerSheet(flights: viewModel.availableFlights) { flight in
+                FlightPickerSheet(
+                    flights: viewModel.availableFlights,
+                    departureCode: viewModel.searchQuery.departureAirport.isEmpty ? (viewModel.homeAirport?.iata ?? "???") : viewModel.searchQuery.departureAirport.uppercased(),
+                    searchDate: viewModel.searchQuery.date
+                ) { flight in
                     Task { await viewModel.selectFlight(flight) }
                 }
                 .presentationDetents([.medium, .large])
@@ -126,6 +130,12 @@ struct HomeView: View {
         .sensoryFeedback(.success, trigger: viewModel.currentForecast?.id)
         .opacity(appeared ? 1 : 0)
         .onAppear { withAnimation(.easeIn(duration: 0.3)) { appeared = true } }
+        .task {
+            if viewModel.isOnboardingPaywall && !viewModel.showPaywall && !viewModel.subscriptionService.isSubscribed {
+                try? await Task.sleep(for: .milliseconds(600))
+                viewModel.showPaywall = true
+            }
+        }
         .onChange(of: viewModel.shouldRequestReview) { _, newValue in
             if newValue {
                 viewModel.shouldRequestReview = false

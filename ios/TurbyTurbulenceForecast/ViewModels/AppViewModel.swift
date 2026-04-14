@@ -110,12 +110,18 @@ class AppViewModel {
     }
 
     func searchFlight() async {
+        currentForecast = nil
+        forecastTimestamp = nil
+        flightService.errorMessage = nil
+        flightService.isLoading = true
+
         if !searchQuery.searchByFlightNumber && searchQuery.departureAirport.isEmpty, let home = homeAirport {
             searchQuery.departureAirport = home.iata
         }
 
         if searchQuery.searchByFlightNumber {
             if let validationError = flightService.validateFlightNumber(searchQuery.flightNumber) {
+                flightService.isLoading = false
                 flightService.errorMessage = validationError
                 return
             }
@@ -126,14 +132,13 @@ class AppViewModel {
                 return
             }
 
-            flightService.isLoading = true
             let flights = await flightService.fetchAllFlightsFromAPI(
                 flightNumber: searchQuery.flightNumber,
                 date: searchQuery.date
             )
-            flightService.isLoading = false
 
             if flights.isEmpty {
+                flightService.isLoading = false
                 flightService.errorMessage = "No flights found for that number on \(formattedSearchDate). Check the flight number and date."
                 return
             }
@@ -143,6 +148,7 @@ class AppViewModel {
             if sorted.count == 1 {
                 await selectFlight(sorted[0])
             } else {
+                flightService.isLoading = false
                 availableFlights = sorted
                 showFlightPicker = true
             }
@@ -151,31 +157,30 @@ class AppViewModel {
             let arrCode = searchQuery.arrivalAirport.uppercased().trimmingCharacters(in: .whitespaces)
 
             guard !depCode.isEmpty, !arrCode.isEmpty else {
+                flightService.isLoading = false
                 flightService.errorMessage = "Please enter both departure and arrival airports."
                 return
             }
 
-            flightService.isLoading = true
             let flights = await flightService.fetchFlightsByRoute(
                 departureIata: depCode,
                 arrivalIata: arrCode,
                 date: searchQuery.date
             )
-            flightService.isLoading = false
 
             if flights.isEmpty {
-                flightService.errorMessage = "No flights found from \(depCode) to \(arrCode) on \(formattedSearchDate)."
+                flightService.isLoading = false
+                if flightService.errorMessage == nil {
+                    flightService.errorMessage = "No flights found from \(depCode) to \(arrCode) on \(formattedSearchDate). Check the airports and date."
+                }
                 return
             }
 
             let sorted = sortFlightsByUpcoming(flights)
 
-            if sorted.count == 1 {
-                await selectFlight(sorted[0])
-            } else {
-                availableFlights = sorted
-                showFlightPicker = true
-            }
+            flightService.isLoading = false
+            availableFlights = sorted
+            showFlightPicker = true
         }
     }
 
@@ -211,6 +216,9 @@ class AppViewModel {
     func selectFlight(_ flight: ADBFlightResponse) async {
         showFlightPicker = false
         availableFlights = []
+        currentForecast = nil
+        forecastTimestamp = nil
+        flightService.isLoading = true
 
         if !searchQuery.searchByFlightNumber, let flightNum = flight.number {
             searchQuery.searchByFlightNumber = true

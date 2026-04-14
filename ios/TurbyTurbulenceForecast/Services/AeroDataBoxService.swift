@@ -62,21 +62,26 @@ class AeroDataBoxService {
         self.apiKey = apiKey
     }
 
-    func fetchDepartures(airportIata: String, from: Date, to: Date) async throws -> [ADBFlightResponse] {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
-        formatter.timeZone = TimeZone.current
+    func fetchDepartures(airportIata: String, dateComponents: (year: Int, month: Int, day: Int)) async throws -> [ADBFlightResponse] {
+        let fromStr = String(format: "%04d-%02d-%02dT00:00", dateComponents.year, dateComponents.month, dateComponents.day)
+        let toStr = String(format: "%04d-%02d-%02dT23:59", dateComponents.year, dateComponents.month, dateComponents.day)
 
-        let maxInterval: TimeInterval = 11 * 3600 + 59 * 60
+        let timeWindows: [(String, String)] = [
+            (String(format: "%04d-%02d-%02dT00:00", dateComponents.year, dateComponents.month, dateComponents.day),
+             String(format: "%04d-%02d-%02dT11:59", dateComponents.year, dateComponents.month, dateComponents.day)),
+            (String(format: "%04d-%02d-%02dT12:00", dateComponents.year, dateComponents.month, dateComponents.day),
+             String(format: "%04d-%02d-%02dT23:59", dateComponents.year, dateComponents.month, dateComponents.day))
+        ]
+
         var allDepartures: [ADBFlightResponse] = []
-        var windowStart = from
+        var lastError: ADBError?
 
-        while windowStart < to {
-            let windowEnd = min(windowStart.addingTimeInterval(maxInterval), to)
-            let fromStr = formatter.string(from: windowStart)
-            let toStr = formatter.string(from: windowEnd)
+        for (index, (windowFrom, windowTo)) in timeWindows.enumerated() {
+            if index > 0 {
+                try? await Task.sleep(for: .milliseconds(300))
+            }
 
-            let path = "/flights/airports/iata/\(airportIata)/\(fromStr)/\(toStr)?direction=Departure&withLeg=true&withCancelled=false&withCodeshared=false&withPrivate=false&withLocation=true"
+            let path = "/flights/airports/iata/\(airportIata)/\(windowFrom)/\(windowTo)?direction=Departure&withLeg=true&withCancelled=false&withCodeshared=true&withPrivate=false&withLocation=true"
 
             guard let url = URL(string: baseURL + path) else {
                 throw ADBError.invalidURL
@@ -88,30 +93,43 @@ class AeroDataBoxService {
             request.setValue(host, forHTTPHeaderField: "x-rapidapi-host")
             request.timeoutInterval = 20
 
-            let (data, response) = try await URLSession.shared.data(for: request)
+            do {
+                let (data, response) = try await URLSession.shared.data(for: request)
 
-            guard let httpResponse = response as? HTTPURLResponse else {
-                throw ADBError.invalidResponse
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    lastError = .invalidResponse
+                    continue
+                }
+
+                switch httpResponse.statusCode {
+                case 200:
+                    let decoder = JSONDecoder()
+                    let fids = try decoder.decode(ADBFIDSResponse.self, from: data)
+                    allDepartures.append(contentsOf: fids.departures ?? [])
+                case 204, 404:
+                    break
+                case 401, 403:
+                    throw ADBError.unauthorized
+                case 429:
+                    lastError = .rateLimited
+                    continue
+                default:
+                    if let raw = String(data: data, encoding: .utf8) {
+                        print("[AeroDataBox] Error \(httpResponse.statusCode): \(raw.prefix(300))")
+                    }
+                    lastError = .serverError(httpResponse.statusCode)
+                    continue
+                }
+            } catch let error as ADBError {
+                throw error
+            } catch {
+                lastError = .invalidResponse
+                continue
             }
+        }
 
-            switch httpResponse.statusCode {
-            case 200:
-                let decoder = JSONDecoder()
-                let fids = try decoder.decode(ADBFIDSResponse.self, from: data)
-                allDepartures.append(contentsOf: fids.departures ?? [])
-            case 204:
-                break
-            case 401, 403:
-                throw ADBError.unauthorized
-            case 404:
-                break
-            case 429:
-                throw ADBError.rateLimited
-            default:
-                throw ADBError.serverError(httpResponse.statusCode)
-            }
-
-            windowStart = windowEnd
+        if allDepartures.isEmpty, let lastError {
+            throw lastError
         }
 
         return allDepartures
@@ -122,11 +140,14 @@ class AeroDataBoxService {
 
         var path = "/flights/number/\(cleaned)"
         if let date {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
-            formatter.timeZone = TimeZone(identifier: "UTC")
-            path += "/\(formatter.string(from: date))"
+            var cal = Calendar.current
+            cal.timeZone = .current
+            let y = cal.component(.year, from: date)
+            let m = cal.component(.month, from: date)
+            let d = cal.component(.day, from: date)
+            path += "/\(String(format: "%04d-%02d-%02d", y, m, d))"
         }
+        path += "?withLocation=true"
 
         guard let url = URL(string: baseURL + path) else {
             throw ADBError.invalidURL
@@ -146,9 +167,17 @@ class AeroDataBoxService {
 
         switch httpResponse.statusCode {
         case 200:
-            let decoder = JSONDecoder()
-            let flights = try decoder.decode([ADBFlightResponse].self, from: data)
-            return flights
+            do {
+                let decoder = JSONDecoder()
+                let flights = try decoder.decode([ADBFlightResponse].self, from: data)
+                return flights
+            } catch {
+                print("[AeroDataBox] Flight decode error: \(error)")
+                if let raw = String(data: data, encoding: .utf8) {
+                    print("[AeroDataBox] Raw response: \(raw.prefix(500))")
+                }
+                throw ADBError.decodingError
+            }
         case 204:
             return []
         case 401, 403:
@@ -158,6 +187,9 @@ class AeroDataBoxService {
         case 429:
             throw ADBError.rateLimited
         default:
+            if let raw = String(data: data, encoding: .utf8) {
+                print("[AeroDataBox] Error \(httpResponse.statusCode): \(raw.prefix(300))")
+            }
             throw ADBError.serverError(httpResponse.statusCode)
         }
     }
@@ -170,6 +202,7 @@ nonisolated enum ADBError: Error, Sendable, LocalizedError {
     case rateLimited
     case serverError(Int)
     case noFlightFound
+    case decodingError
 
     var errorDescription: String? {
         switch self {
@@ -179,6 +212,7 @@ nonisolated enum ADBError: Error, Sendable, LocalizedError {
         case .rateLimited: "Too many requests. Please wait a moment."
         case .serverError(let code): "Flight data service error (\(code))."
         case .noFlightFound: "No flight found with that number."
+        case .decodingError: "Unexpected response from flight data service."
         }
     }
 }

@@ -36,5 +36,6 @@ struct MainTabView: View {
             }
         }
         .tint(TurbyTurbulenceForecastTheme.accent)
+        .sensoryFeedback(.selection, trigger: viewModel.selectedTab)
     }
 }

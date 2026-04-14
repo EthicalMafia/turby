@@ -120,14 +120,23 @@ struct OnboardingInputPage: View {
 
             Button {
                 Task {
-                    viewModel.isOnboardingPaywall = true
                     await viewModel.searchFlight()
-                    viewModel.completeOnboarding()
+                    if viewModel.currentForecast != nil {
+                        viewModel.isOnboardingPaywall = true
+                        viewModel.showPaywall = false
+                        viewModel.completeOnboarding()
+                    }
                 }
             } label: {
                 HStack(spacing: 8) {
-                    Image(systemName: "sparkle.magnifyingglass")
-                    Text("Get My Forecast")
+                    if viewModel.flightService.isLoading {
+                        ProgressView()
+                            .tint(.blue)
+                        Text("Searching...")
+                    } else {
+                        Image(systemName: "sparkle.magnifyingglass")
+                        Text("Get My Forecast")
+                    }
                 }
                 .font(.headline)
                 .foregroundStyle(.blue)
@@ -137,9 +146,10 @@ struct OnboardingInputPage: View {
                     RoundedRectangle(cornerRadius: 16)
                         .fill(.white)
                 )
+                .animation(.easeInOut(duration: 0.2), value: viewModel.flightService.isLoading)
             }
-            .disabled(!isInputValid)
-            .opacity(isInputValid ? 1 : 0.6)
+            .disabled(!isInputValid || viewModel.flightService.isLoading)
+            .opacity(isInputValid && !viewModel.flightService.isLoading ? 1 : 0.6)
 
             Spacer()
         }
@@ -147,6 +157,25 @@ struct OnboardingInputPage: View {
         .opacity(appeared ? 1 : 0)
         .onAppear {
             withAnimation(.easeIn(duration: 0.4)) { appeared = true }
+        }
+        .sheet(isPresented: Binding(
+            get: { viewModel.showFlightPicker },
+            set: { viewModel.showFlightPicker = $0 }
+        )) {
+            FlightPickerSheet(
+                flights: viewModel.availableFlights,
+                departureCode: viewModel.searchQuery.departureAirport.isEmpty ? (viewModel.homeAirport?.iata ?? "???") : viewModel.searchQuery.departureAirport.uppercased(),
+                searchDate: viewModel.searchQuery.date
+            ) { flight in
+                Task {
+                    await viewModel.selectFlight(flight)
+                    viewModel.isOnboardingPaywall = true
+                    viewModel.showPaywall = false
+                    viewModel.completeOnboarding()
+                }
+            }
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.visible)
         }
     }
 

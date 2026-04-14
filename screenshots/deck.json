@@ -1,0 +1,52 @@
+{
+  "theme": {
+    "style": "High-altitude aviation atmosphere rendered in deep midnight navy, cool teal, and warm coral. The visual world evokes the thin luminous air seen from cruising altitude — vast dark skies, soft atmospheric halos, and the quiet drama of light above the cloud layer. Textures feel like frosted glass cockpit panels and aurora-lit stratosphere. Backgrounds balance cinematic depth with editorial calm, anchored by a palette that reads premium, trustworthy, and serene.",
+    "headlineFont": "font-family: 'Plus Jakarta Sans', sans-serif; @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&display=swap')",
+    "headlineFontSize": 120,
+    "mockupIds": {
+      "iphone": "deep-blue",
+      "ipad": "space-gray"
+    },
+    "palette": {
+      "primary": "#0A1628",
+      "secondary": "#0E6E8C",
+      "accent": "#FF6B4A"
+    }
+  },
+  "slides": [
+    {
+      "label": "Hero – Instant Access",
+      "backgroundPrompt": "Abstract digital art featuring sweeping aurora ribbons of deep electric teal and cool cerulean blue arcing diagonally across a vast midnight navy expanse, luminous volumetric light diffusing softly from the lower-right corner, translucent frosted glass layers floating at depth with thin silver edge highlights catching the glow, fine atmospheric particles drifting upward through the midground, the upper 30% dissolving to pure near-black midnight navy for clean text overlay. 8K quality, ultra smooth gradients, premium feel, no text, no letters, no UI elements, no device mockups"
+    },
+    {
+      "label": "Calm Mode – Anxiety Relief",
+      "backgroundPrompt": "Abstract digital art with wide horizontal silk ribbons of soft mint green and pale seafoam flowing gently across the frame in slow undulating waves, a diffused luminous haze of pearl white pooling softly in the lower center, the color temperature cooling from warm mint to calm deep teal as it rises, subtle gossamer wisps of translucent white drifting through the midground adding airy lightness, the upper third fading to serene deep navy with no hard edges. 8K quality, ultra smooth gradients, premium feel, no text, no letters, no UI elements, no device mockups"
+    },
+    {
+      "label": "Seat Selection – Smart Utility",
+      "backgroundPrompt": "Abstract 3D rendered scene of curved luminous arcs in rich indigo and deep violet sweeping from left to right across a dark midnight canvas, each arc edged with a thin line of cool silver light creating dramatic rim contrast, frosted geometric shards suspended in midground catching oblique light from the upper left, layers of translucent deep purple and cobalt blue overlapping with soft glow halos at intersections, the upper portion of the frame dark and calm. 8K quality, ultra smooth gradients, premium feel, no text, no letters, no UI elements, no device mockups"
+    },
+    {
+      "label": "Flight Timeline – Phase Clarity",
+      "backgroundPrompt": "Abstract digital art featuring stacked translucent planes of frosted deep teal glass arranged at subtle shallow angles filling the mid and lower frame, each plane edge catching a hairline of cool aquamarine and pale ice-blue light, deep shadow pools between the layers creating strong atmospheric depth, a soft diffused glow of dark cyan bleeding upward from below, fine luminous dust particles scattered across the midground, the upper 30% open and dark midnight blue fading cleanly. 8K quality, ultra smooth gradients, premium feel, no text, no letters, no UI elements, no device mockups"
+    },
+    {
+      "label": "Prediction – Full Route Forecast",
+      "backgroundPrompt": "Abstract digital art with molten arcs of warm sunset coral and deep burnt amber sweeping in bold curves from the lower-left across the frame, transitioning through rich persimmon orange into deep midnight navy at the top third, dramatic volumetric light bleeding upward from the lower center like a sunrise seen from extreme altitude, thin threads of luminous gold tracing the arc edges, subtle warmth gradients layered in the lower half while the upper region remains cool and dark. 8K quality, ultra smooth gradients, premium feel, no text, no letters, no UI elements, no device mockups"
+    },
+    {
+      "label": "Pre-Flight Reassurance",
+      "backgroundPrompt": "Abstract digital art with two large soft luminous spheres of cool periwinkle and pale azure light floating at different depths across a vast deep midnight blue canvas, their edges dissolving into long diffused halos that bleed across the frame horizontally, subtle frosted cloud-like translucent forms drifting through the midground catching soft blue-white rim light, a constellation of tiny silver specks scattered sparsely in the upper half, the overall atmosphere open, spacious, and quietly radiant. 8K quality, ultra smooth gradients, premium feel, no text, no letters, no UI elements, no device mockups"
+    }
+  ],
+  "headlines": {
+    "en": {
+      "Hero – Instant Access": "Every Flight<br>One Tap",
+      "Calm Mode – Anxiety Relief": "Breathe Easy<br>at 30,000ft",
+      "Seat Selection – Smart Utility": "Pick the<br>Smoothest Seat",
+      "Flight Timeline – Phase Clarity": "Phase by Phase<br>Clarity",
+      "Prediction – Full Route Forecast": "Your Flight<br>Predicted",
+      "Pre-Flight Reassurance": "Know Before<br>You Fly"
+    }
+  }
+}

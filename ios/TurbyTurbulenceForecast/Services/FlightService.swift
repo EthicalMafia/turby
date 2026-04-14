@@ -38,6 +38,7 @@ class FlightService {
     }
 
     private let airportDatabase: [String: (name: String, city: String, lat: Double, lon: Double)] = [
+        // North America - USA Major
         "JFK": ("John F. Kennedy International", "New York", 40.6413, -73.7781),
         "LAX": ("Los Angeles International", "Los Angeles", 33.9425, -118.4081),
         "ORD": ("O'Hare International", "Chicago", 41.9742, -87.9073),
@@ -65,48 +66,269 @@ class FlightService {
         "BWI": ("Baltimore/Washington International", "Baltimore", 39.1774, -76.6684),
         "ANC": ("Ted Stevens Anchorage International", "Anchorage", 61.1743, -149.9983),
         "LAS": ("Harry Reid International", "Las Vegas", 36.0840, -115.1537),
+        "SLC": ("Salt Lake City International", "Salt Lake City", 40.7884, -111.9778),
+        "PHL": ("Philadelphia International", "Philadelphia", 39.8721, -75.2411),
+        "LGA": ("LaGuardia", "New York", 40.7769, -73.8740),
+        "BNA": ("Nashville International", "Nashville", 36.1263, -86.6774),
+        "AUS": ("Austin-Bergstrom International", "Austin", 30.1975, -97.6664),
+        "RDU": ("Raleigh-Durham International", "Raleigh", 35.8776, -78.7875),
+        "MCI": ("Kansas City International", "Kansas City", 39.2976, -94.7139),
+        "SJC": ("San Jose International", "San Jose", 37.3626, -121.9290),
+        "OAK": ("Oakland International", "Oakland", 37.7213, -122.2208),
+        "SMF": ("Sacramento International", "Sacramento", 38.6954, -121.5908),
+        "TPA": ("Tampa International", "Tampa", 27.9755, -82.5332),
+        "PDX": ("Portland International", "Portland", 45.5898, -122.5951),
+        "STL": ("St. Louis Lambert International", "St. Louis", 38.7487, -90.3700),
+        "IND": ("Indianapolis International", "Indianapolis", 39.7173, -86.2944),
+        "CLE": ("Cleveland Hopkins International", "Cleveland", 41.4117, -81.8498),
+        "PIT": ("Pittsburgh International", "Pittsburgh", 40.4915, -80.2329),
+        "CMH": ("John Glenn Columbus International", "Columbus", 39.9980, -82.8919),
+        "MKE": ("General Mitchell International", "Milwaukee", 42.9472, -87.8966),
+        "MSY": ("Louis Armstrong New Orleans International", "New Orleans", 29.9934, -90.2580),
+        "CVG": ("Cincinnati/Northern Kentucky International", "Cincinnati", 39.0488, -84.6678),
+        "HNL": ("Daniel K. Inouye International", "Honolulu", 21.3187, -157.9225),
+        "OGG": ("Kahului", "Maui", 20.8986, -156.4305),
         "SJU": ("Luis Munoz Marin International", "San Juan", 18.4394, -66.0018),
-        "CUN": ("Cancun International", "Cancun", 21.0365, -86.8771),
-        "SDQ": ("Las Americas International", "Santo Domingo", 18.4297, -69.6688),
+        // Canada
         "YYZ": ("Toronto Pearson International", "Toronto", 43.6777, -79.6248),
         "YVR": ("Vancouver International", "Vancouver", 49.1967, -123.1815),
+        "YUL": ("Montréal-Trudeau International", "Montréal", 45.4706, -73.7408),
+        "YYC": ("Calgary International", "Calgary", 51.1215, -114.0076),
+        "YEG": ("Edmonton International", "Edmonton", 53.3097, -113.5800),
+        "YOW": ("Ottawa Macdonald-Cartier International", "Ottawa", 45.3225, -75.6692),
+        "YHZ": ("Halifax Stanfield International", "Halifax", 44.8808, -63.5086),
+        "YWG": ("Winnipeg James Armstrong Richardson International", "Winnipeg", 49.9100, -97.2399),
+        // Mexico & Caribbean
+        "MEX": ("Mexico City International", "Mexico City", 19.4363, -99.0721),
+        "CUN": ("Cancun International", "Cancun", 21.0365, -86.8771),
+        "GDL": ("Guadalajara International", "Guadalajara", 20.5218, -103.3111),
+        "SJD": ("San Jose del Cabo International", "Los Cabos", 23.1518, -109.7215),
+        "PVR": ("Puerto Vallarta International", "Puerto Vallarta", 20.6801, -105.2544),
+        "MTY": ("Monterrey International", "Monterrey", 25.7785, -100.1069),
+        "SDQ": ("Las Americas International", "Santo Domingo", 18.4297, -69.6688),
+        "PUJ": ("Punta Cana International", "Punta Cana", 18.5674, -68.3634),
+        "NAS": ("Lynden Pindling International", "Nassau", 25.0390, -77.4662),
+        "MBJ": ("Sangster International", "Montego Bay", 18.5037, -77.9134),
+        "KIN": ("Norman Manley International", "Kingston", 17.9357, -76.7875),
+        "HAV": ("Jose Marti International", "Havana", 22.9892, -82.4091),
+        "AUA": ("Queen Beatrix International", "Oranjestad", 12.5014, -70.0152),
+        "SXM": ("Princess Juliana International", "Philipsburg", 18.0410, -63.1089),
+        // UK & Ireland
         "LHR": ("London Heathrow", "London", 51.4700, -0.4543),
         "LGW": ("London Gatwick", "London", 51.1537, -0.1821),
+        "STN": ("London Stansted", "London", 51.8860, 0.2389),
+        "LTN": ("London Luton", "London", 51.8747, -0.3684),
         "MAN": ("Manchester Airport", "Manchester", 53.3537, -2.2750),
+        "EDI": ("Edinburgh Airport", "Edinburgh", 55.9500, -3.3725),
+        "BHX": ("Birmingham Airport", "Birmingham", 52.4539, -1.7480),
+        "GLA": ("Glasgow Airport", "Glasgow", 55.8642, -4.4331),
+        "BRS": ("Bristol Airport", "Bristol", 51.3827, -2.7191),
+        "LCY": ("London City Airport", "London", 51.5053, 0.0553),
         "DUB": ("Dublin Airport", "Dublin", 53.4264, -6.2499),
+        "SNN": ("Shannon Airport", "Shannon", 52.7020, -8.9248),
+        "ORK": ("Cork Airport", "Cork", 51.8413, -8.4911),
+        // France
         "CDG": ("Charles de Gaulle", "Paris", 49.0097, 2.5479),
+        "ORY": ("Paris Orly", "Paris", 48.7233, 2.3794),
+        "NCE": ("Nice Côte d'Azur", "Nice", 43.6584, 7.2159),
+        "LYS": ("Lyon-Saint Exupéry", "Lyon", 45.7256, 5.0811),
+        "MRS": ("Marseille Provence", "Marseille", 43.4393, 5.2214),
+        // Germany
         "FRA": ("Frankfurt Airport", "Frankfurt", 50.0379, 8.5622),
         "MUC": ("Munich Airport", "Munich", 48.3537, 11.7750),
+        "BER": ("Berlin Brandenburg", "Berlin", 52.3667, 13.5033),
+        "DUS": ("Düsseldorf Airport", "Düsseldorf", 51.2895, 6.7668),
+        "HAM": ("Hamburg Airport", "Hamburg", 53.6304, 9.9882),
+        "CGN": ("Cologne Bonn", "Cologne", 50.8659, 7.1427),
+        "STR": ("Stuttgart Airport", "Stuttgart", 48.6899, 9.2220),
+        // Netherlands, Belgium, Switzerland, Austria
         "AMS": ("Amsterdam Schiphol", "Amsterdam", 52.3105, 4.7683),
+        "BRU": ("Brussels Airport", "Brussels", 50.9010, 4.4844),
+        "ZRH": ("Zurich Airport", "Zurich", 47.4647, 8.5492),
+        "GVA": ("Geneva Airport", "Geneva", 46.2381, 6.1090),
+        "VIE": ("Vienna International", "Vienna", 48.1103, 16.5697),
+        // Italy
         "FCO": ("Leonardo da Vinci International", "Rome", 41.8003, 12.2389),
+        "MXP": ("Milan Malpensa", "Milan", 45.6306, 8.7281),
+        "LIN": ("Milan Linate", "Milan", 45.4491, 9.2783),
+        "VCE": ("Venice Marco Polo", "Venice", 45.5053, 12.3519),
+        "NAP": ("Naples International", "Naples", 40.8860, 14.2908),
+        "BLQ": ("Bologna Guglielmo Marconi", "Bologna", 44.5354, 11.2887),
+        "FLR": ("Florence Amerigo Vespucci", "Florence", 43.8100, 11.2051),
+        "CTA": ("Catania-Fontanarossa", "Catania", 37.4668, 15.0664),
+        // Spain & Portugal
         "MAD": ("Adolfo Suarez Madrid-Barajas", "Madrid", 40.4936, -3.5668),
         "BCN": ("Barcelona El Prat", "Barcelona", 41.2974, 2.0833),
-        "ZRH": ("Zurich Airport", "Zurich", 47.4647, 8.5492),
+        "PMI": ("Palma de Mallorca", "Palma", 39.5517, 2.7388),
+        "AGP": ("Málaga-Costa del Sol", "Málaga", 36.6749, -4.4991),
+        "ALC": ("Alicante-Elche", "Alicante", 38.2822, -0.5582),
+        "LIS": ("Lisbon Humberto Delgado", "Lisbon", 38.7813, -9.1359),
+        "OPO": ("Porto Francisco Sá Carneiro", "Porto", 41.2481, -8.6814),
+        "FAO": ("Faro Airport", "Faro", 37.0144, -7.9659),
+        // Scandinavia
+        "CPH": ("Copenhagen Kastrup", "Copenhagen", 55.6181, 12.6560),
+        "OSL": ("Oslo Gardermoen", "Oslo", 60.1939, 11.1004),
+        "ARN": ("Stockholm Arlanda", "Stockholm", 59.6519, 17.9186),
+        "HEL": ("Helsinki-Vantaa", "Helsinki", 60.3172, 24.9633),
+        "KEF": ("Keflavik International", "Reykjavik", 63.9850, -22.6056),
+        // Eastern Europe
+        "WAW": ("Warsaw Chopin", "Warsaw", 52.1657, 20.9671),
+        "PRG": ("Václav Havel Prague", "Prague", 50.1008, 14.2600),
+        "BUD": ("Budapest Ferenc Liszt", "Budapest", 47.4399, 19.2556),
+        "OTP": ("Henri Coandă International", "Bucharest", 44.5711, 26.0850),
+        "SOF": ("Sofia Airport", "Sofia", 42.6967, 23.4114),
+        "BEG": ("Belgrade Nikola Tesla", "Belgrade", 44.8184, 20.3091),
+        "ZAG": ("Zagreb Franjo Tuđman", "Zagreb", 45.7430, 16.0688),
+        "ATH": ("Athens Eleftherios Venizelos", "Athens", 37.9364, 23.9445),
+        "SKG": ("Thessaloniki Macedonia", "Thessaloniki", 40.5197, 22.9709),
+        "HER": ("Heraklion International", "Heraklion", 35.3397, 25.1803),
+        "TLL": ("Tallinn Lennart Meri", "Tallinn", 59.4133, 24.8328),
+        "RIX": ("Riga International", "Riga", 56.9236, 23.9711),
+        "VNO": ("Vilnius International", "Vilnius", 54.6341, 25.2858),
+        // Turkey
         "IST": ("Istanbul Airport", "Istanbul", 41.2619, 28.7419),
+        "SAW": ("Sabiha Gökçen International", "Istanbul", 40.8986, 29.3092),
+        "AYT": ("Antalya Airport", "Antalya", 36.8987, 30.8005),
+        "ESB": ("Esenboğa International", "Ankara", 40.1281, 32.9951),
+        "ADB": ("Adnan Menderes", "Izmir", 38.2924, 27.1570),
+        // Middle East
         "DXB": ("Dubai International", "Dubai", 25.2532, 55.3657),
         "AUH": ("Abu Dhabi International", "Abu Dhabi", 24.4330, 54.6511),
         "DOH": ("Hamad International", "Doha", 25.2609, 51.6138),
+        "RUH": ("King Khalid International", "Riyadh", 24.9576, 46.6988),
+        "JED": ("King Abdulaziz International", "Jeddah", 21.6796, 39.1565),
+        "DMM": ("King Fahd International", "Dammam", 26.4712, 49.7979),
+        "MED": ("Prince Mohammad bin Abdulaziz International", "Medina", 24.5534, 39.7051),
+        "BAH": ("Bahrain International", "Manama", 26.2708, 50.6336),
+        "KWI": ("Kuwait International", "Kuwait City", 29.2266, 47.9689),
+        "MCT": ("Muscat International", "Muscat", 23.5933, 58.2844),
+        "TLV": ("Ben Gurion International", "Tel Aviv", 32.0114, 34.8867),
+        "AMM": ("Queen Alia International", "Amman", 31.7226, 35.9932),
+        "BEY": ("Rafic Hariri International", "Beirut", 33.8209, 35.4884),
+        "IKA": ("Imam Khomeini International", "Tehran", 35.4161, 51.1522),
+        "BGW": ("Baghdad International", "Baghdad", 33.2625, 44.2346),
+        // Egypt
+        "CAI": ("Cairo International", "Cairo", 30.1219, 31.4056),
+        "HRG": ("Hurghada International", "Hurghada", 27.1783, 33.7994),
+        "SSH": ("Sharm el-Sheikh International", "Sharm el-Sheikh", 27.9773, 34.3950),
+        "LXR": ("Luxor International", "Luxor", 25.6741, 32.7066),
+        "HBE": ("Borg El Arab International", "Alexandria", 30.9177, 29.6964),
+        // North Africa
+        "CMN": ("Mohammed V International", "Casablanca", 33.3675, -7.5898),
+        "RAK": ("Marrakech Menara", "Marrakech", 31.6069, -8.0363),
+        "TNG": ("Tangier Ibn Battouta", "Tangier", 35.7269, -5.9169),
+        "TUN": ("Tunis-Carthage International", "Tunis", 36.8510, 10.2272),
+        "ALG": ("Houari Boumediene", "Algiers", 36.6910, 3.2154),
+        // Sub-Saharan Africa
+        "JNB": ("O.R. Tambo International", "Johannesburg", -26.1392, 28.2460),
+        "CPT": ("Cape Town International", "Cape Town", -33.9649, 18.6017),
+        "DUR": ("King Shaka International", "Durban", -29.6144, 31.1197),
+        "NBO": ("Jomo Kenyatta International", "Nairobi", -1.3192, 36.9278),
+        "ADD": ("Addis Ababa Bole International", "Addis Ababa", 8.9779, 38.7993),
+        "LOS": ("Murtala Muhammed International", "Lagos", 6.5774, 3.3211),
+        "ABV": ("Nnamdi Azikiwe International", "Abuja", 9.0065, 7.2632),
+        "ACC": ("Kotoka International", "Accra", 5.6052, -0.1668),
+        "DSS": ("Blaise Diagne International", "Dakar", 14.6700, -17.0733),
+        "DAR": ("Julius Nyerere International", "Dar es Salaam", -6.8781, 39.2026),
+        "EBB": ("Entebbe International", "Entebbe", 0.0424, 32.4435),
+        "KGL": ("Kigali International", "Kigali", -1.9686, 30.1395),
+        "MRU": ("Sir Seewoosagur Ramgoolam International", "Mauritius", -20.4302, 57.6836),
+        "SEZ": ("Seychelles International", "Mahé", -4.6743, 55.5218),
+        // East Asia
         "NRT": ("Narita International", "Tokyo", 35.7720, 140.3929),
         "HND": ("Haneda Airport", "Tokyo", 35.5494, 139.7798),
+        "KIX": ("Kansai International", "Osaka", 34.4347, 135.2441),
+        "NGO": ("Chubu Centrair International", "Nagoya", 34.8584, 136.8125),
+        "FUK": ("Fukuoka Airport", "Fukuoka", 33.5859, 130.4511),
+        "CTS": ("New Chitose Airport", "Sapporo", 42.7752, 141.6925),
         "ICN": ("Incheon International", "Seoul", 37.4602, 126.4407),
-        "SIN": ("Singapore Changi", "Singapore", 1.3644, 103.9915),
+        "GMP": ("Gimpo International", "Seoul", 37.5586, 126.7906),
+        "PUS": ("Gimhae International", "Busan", 35.1795, 128.9382),
         "HKG": ("Hong Kong International", "Hong Kong", 22.3080, 113.9185),
         "PVG": ("Shanghai Pudong International", "Shanghai", 31.1443, 121.8083),
+        "SHA": ("Shanghai Hongqiao International", "Shanghai", 31.1979, 121.3363),
         "PEK": ("Beijing Capital International", "Beijing", 40.0799, 116.6031),
+        "PKX": ("Beijing Daxing International", "Beijing", 39.5098, 116.4105),
+        "CAN": ("Guangzhou Baiyun International", "Guangzhou", 23.3924, 113.2988),
+        "SZX": ("Shenzhen Bao'an International", "Shenzhen", 22.6393, 113.8107),
+        "CTU": ("Chengdu Shuangliu International", "Chengdu", 30.5728, 103.9472),
+        "CKG": ("Chongqing Jiangbei International", "Chongqing", 29.7192, 106.6417),
+        "XIY": ("Xi'an Xianyang International", "Xi'an", 34.4471, 108.7516),
+        "HGH": ("Hangzhou Xiaoshan International", "Hangzhou", 30.2295, 120.4344),
+        "NKG": ("Nanjing Lukou International", "Nanjing", 31.7420, 118.8620),
+        "WUH": ("Wuhan Tianhe International", "Wuhan", 30.7838, 114.2081),
         "TPE": ("Taiwan Taoyuan International", "Taipei", 25.0797, 121.2342),
+        // Southeast Asia
+        "SIN": ("Singapore Changi", "Singapore", 1.3644, 103.9915),
         "BKK": ("Suvarnabhumi Airport", "Bangkok", 13.6900, 100.7501),
+        "DMK": ("Don Mueang International", "Bangkok", 13.9126, 100.6068),
+        "KUL": ("Kuala Lumpur International", "Kuala Lumpur", 2.7456, 101.7099),
+        "CGK": ("Soekarno-Hatta International", "Jakarta", -6.1256, 106.6558),
+        "DPS": ("Ngurah Rai International", "Bali", -8.7482, 115.1672),
+        "MNL": ("Ninoy Aquino International", "Manila", 14.5086, 121.0198),
+        "CEB": ("Mactan-Cebu International", "Cebu", 10.3075, 123.9794),
+        "SGN": ("Tan Son Nhat International", "Ho Chi Minh City", 10.8188, 106.6520),
+        "HAN": ("Noi Bai International", "Hanoi", 21.2212, 105.8070),
+        "DAD": ("Da Nang International", "Da Nang", 16.0439, 108.1992),
+        "REP": ("Siem Reap International", "Siem Reap", 13.4107, 103.8126),
+        "PNH": ("Phnom Penh International", "Phnom Penh", 11.5466, 104.8442),
+        "RGN": ("Yangon International", "Yangon", 16.9074, 96.1332),
+        "HKT": ("Phuket International", "Phuket", 8.1132, 98.3169),
+        "CNX": ("Chiang Mai International", "Chiang Mai", 18.7668, 98.9625),
+        // South Asia
         "DEL": ("Indira Gandhi International", "New Delhi", 28.5562, 77.1000),
         "BOM": ("Chhatrapati Shivaji International", "Mumbai", 19.0896, 72.8656),
+        "BLR": ("Kempegowda International", "Bengaluru", 13.1979, 77.7063),
+        "MAA": ("Chennai International", "Chennai", 12.9941, 80.1709),
+        "HYD": ("Rajiv Gandhi International", "Hyderabad", 17.2403, 78.4294),
+        "CCU": ("Netaji Subhas Chandra Bose International", "Kolkata", 22.6547, 88.4467),
+        "COK": ("Cochin International", "Kochi", 10.1520, 76.4019),
+        "GOI": ("Goa International", "Goa", 15.3809, 73.8314),
+        "ISB": ("Islamabad International", "Islamabad", 33.5605, 72.8526),
+        "KHI": ("Jinnah International", "Karachi", 24.9065, 67.1610),
+        "LHE": ("Allama Iqbal International", "Lahore", 31.5216, 74.4036),
+        "DAC": ("Hazrat Shahjalal International", "Dhaka", 23.8432, 90.3978),
+        "CMB": ("Bandaranaike International", "Colombo", 7.1808, 79.8841),
+        "MLE": ("Velana International", "Malé", 4.1918, 73.5290),
+        "KTM": ("Tribhuvan International", "Kathmandu", 27.6966, 85.3591),
+        // Oceania
         "SYD": ("Sydney Kingsford Smith", "Sydney", -33.9461, 151.1772),
         "MEL": ("Melbourne Airport", "Melbourne", -37.6690, 144.8410),
+        "BNE": ("Brisbane Airport", "Brisbane", -27.3842, 153.1175),
+        "PER": ("Perth Airport", "Perth", -31.9403, 115.9672),
+        "ADL": ("Adelaide Airport", "Adelaide", -34.9461, 138.5310),
         "AKL": ("Auckland Airport", "Auckland", -37.0082, 174.7850),
+        "CHC": ("Christchurch International", "Christchurch", -43.4894, 172.5322),
+        "WLG": ("Wellington International", "Wellington", -41.3272, 174.8053),
+        "NAN": ("Nadi International", "Nadi", -17.7554, 177.4436),
+        "PPT": ("Faa'a International", "Papeete", -17.5537, -149.6073),
+        // South America
         "GRU": ("Sao Paulo-Guarulhos International", "Sao Paulo", -23.4356, -46.4731),
+        "GIG": ("Rio de Janeiro-Galeão International", "Rio de Janeiro", -22.8100, -43.2506),
         "EZE": ("Ministro Pistarini International", "Buenos Aires", -34.8222, -58.5358),
         "SCL": ("Santiago International", "Santiago", -33.3930, -70.7858),
         "LIM": ("Jorge Chavez International", "Lima", -12.0219, -77.1143),
         "BOG": ("El Dorado International", "Bogota", 4.7016, -74.1469),
+        "MDE": ("José María Córdova International", "Medellín", 6.1645, -75.4231),
+        "UIO": ("Mariscal Sucre International", "Quito", -0.1292, -78.3575),
+        "GYE": ("José Joaquín de Olmedo International", "Guayaquil", -2.1574, -79.8837),
+        "CCS": ("Simón Bolívar International", "Caracas", 10.6012, -66.9912),
+        "MVD": ("Carrasco International", "Montevideo", -34.8384, -56.0308),
+        // Central America
         "PTY": ("Tocumen International", "Panama City", 9.0714, -79.3835),
-        "JNB": ("O.R. Tambo International", "Johannesburg", -26.1392, 28.2460),
+        "SJO": ("Juan Santamaría International", "San José", 9.9939, -84.2088),
+        "GUA": ("La Aurora International", "Guatemala City", 14.5833, -90.5275),
+        "SAL": ("Monseñor Óscar Arnulfo Romero International", "San Salvador", 13.4409, -89.0557),
+        // Russia & Central Asia
+        "SVO": ("Sheremetyevo International", "Moscow", 55.9726, 37.4146),
+        "DME": ("Domodedovo International", "Moscow", 55.4088, 37.9063),
+        "LED": ("Pulkovo", "St. Petersburg", 59.8003, 30.2625),
+        "ALA": ("Almaty International", "Almaty", 43.3521, 77.0405),
+        "NQZ": ("Nursultan Nazarbayev International", "Astana", 51.0222, 71.4669),
+        "TAS": ("Islam Karimov Tashkent International", "Tashkent", 41.2579, 69.2812),
+        "GYD": ("Heydar Aliyev International", "Baku", 40.4675, 50.0467),
+        "TBS": ("Tbilisi International", "Tbilisi", 41.6692, 44.9547),
+        "EVN": ("Zvartnots International", "Yerevan", 40.1473, 44.3959),
     ]
 
     private var knownAirlineCodes: Set<String> {
@@ -260,8 +482,8 @@ class FlightService {
             let flightData = selectedFlight
 
             if let flight = flightData {
-                depCode = flight.departure?.airport?.iata ?? "???"
-                arrCode = flight.arrival?.airport?.iata ?? "???"
+                depCode = flight.departure?.airport?.iata ?? query.departureAirport.uppercased().trimmingCharacters(in: .whitespaces)
+                arrCode = flight.arrival?.airport?.iata ?? query.arrivalAirport.uppercased().trimmingCharacters(in: .whitespaces)
                 depLat = flight.departure?.airport?.location?.lat
                 depLon = flight.departure?.airport?.location?.lon
                 arrLat = flight.arrival?.airport?.location?.lat
@@ -398,6 +620,9 @@ class FlightService {
         } catch {
             if let adbError = error as? ADBError {
                 errorMessage = adbError.errorDescription
+            } else {
+                print("[FlightService] Flight number search error: \(error)")
+                errorMessage = "Could not search flights. Please try again."
             }
             return []
         }
@@ -409,12 +634,15 @@ class FlightService {
             return []
         }
 
-        let calendar = Calendar.current
-        let startOfDay = calendar.startOfDay(for: date)
-        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay) ?? date
+        var calendar = Calendar.current
+        calendar.timeZone = .current
+        let noon = calendar.date(bySettingHour: 12, minute: 0, second: 0, of: date) ?? date
+        let year = calendar.component(.year, from: noon)
+        let month = calendar.component(.month, from: noon)
+        let day = calendar.component(.day, from: noon)
 
         do {
-            let departures = try await service.fetchDepartures(airportIata: departureIata, from: startOfDay, to: endOfDay)
+            let departures = try await service.fetchDepartures(airportIata: departureIata, dateComponents: (year: year, month: month, day: day))
             let filtered = departures.filter { flight in
                 guard let arrIata = flight.arrival?.airport?.iata else { return false }
                 return arrIata.uppercased() == arrivalIata.uppercased()
@@ -423,6 +651,9 @@ class FlightService {
         } catch {
             if let adbError = error as? ADBError {
                 errorMessage = adbError.errorDescription
+            } else {
+                print("[FlightService] Route search error: \(error)")
+                errorMessage = "Could not search flights. Please try again."
             }
             return []
         }
@@ -430,13 +661,20 @@ class FlightService {
 
     private func buildAirport(code: String, name: String?, city: String?, lat: Double?, lon: Double?) -> Airport {
         let fallback = airportDatabase[code]
+        let resolvedLat = lat ?? fallback?.lat
+        let resolvedLon = lon ?? fallback?.lon
+
+        if resolvedLat == nil || resolvedLon == nil {
+            print("[FlightService] WARNING: No coordinates found for airport \(code). Route map will be inaccurate.")
+        }
+
         return Airport(
             id: code,
             code: code,
             name: name ?? fallback?.name ?? "\(code) Airport",
             city: city ?? fallback?.city ?? code,
-            latitude: lat ?? fallback?.lat ?? 0,
-            longitude: lon ?? fallback?.lon ?? 0
+            latitude: resolvedLat ?? 0,
+            longitude: resolvedLon ?? 0
         )
     }
 

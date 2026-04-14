@@ -6,8 +6,8 @@ struct ExitIntentView: View {
     @State private var appeared = false
     @State private var pulseTimer = false
 
-    private var monthlyPackage: Package? {
-        viewModel.subscriptionService.monthlyPackage
+    private var weeklyPackage: Package? {
+        viewModel.subscriptionService.weeklyPackage
     }
 
     var body: some View {
@@ -24,52 +24,49 @@ struct ExitIntentView: View {
                             .frame(width: 72, height: 72)
                             .scaleEffect(pulseTimer ? 1.1 : 1.0)
                             .animation(.easeInOut(duration: 1).repeatForever(autoreverses: true), value: pulseTimer)
-                        Image(systemName: "clock.badge.checkmark.fill")
+                        Image(systemName: "airplane.circle.fill")
                             .font(.system(size: 32))
                             .symbolRenderingMode(.hierarchical)
                             .foregroundStyle(TurbyTurbulenceForecastTheme.accent)
                     }
 
-                    Text("Wait — special offer!")
+                    Text("Not ready to commit?")
                         .font(.title2.weight(.bold))
 
-                    Text("Get **50% off** your first month")
+                    Text("Try Turby for just one week —\nno long-term commitment")
                         .font(.body)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
 
                     HStack(spacing: 4) {
-                        Image(systemName: "clock.fill")
+                        Image(systemName: "heart.fill")
                             .font(.caption)
-                        Text("Limited time offer")
+                        Text("Cancel anytime")
                             .font(.caption.weight(.medium))
                     }
-                    .foregroundStyle(.orange)
+                    .foregroundStyle(TurbyTurbulenceForecastTheme.accent)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 6)
-                    .background(Capsule().fill(.orange.opacity(0.12)))
+                    .background(Capsule().fill(TurbyTurbulenceForecastTheme.accent.opacity(0.12)))
                 }
 
-                if let pkg = monthlyPackage {
-                    HStack(spacing: 4) {
-                        Text(pkg.storeProduct.localizedPriceString)
-                            .strikethrough()
-                            .foregroundStyle(.secondary)
-                        Text("50% off")
-                            .font(.title2.weight(.bold))
+                if let pkg = weeklyPackage {
+                    VStack(spacing: 4) {
+                        Text("Just \(pkg.storeProduct.localizedPriceString)/week")
+                            .font(.title3.weight(.bold))
                             .foregroundStyle(TurbyTurbulenceForecastTheme.accent)
-                        Text("/ first month")
-                            .font(.subheadline)
+                        Text("Full access to all features")
+                            .font(.caption)
                             .foregroundStyle(.secondary)
                     }
                 }
 
                 Button {
-                    if let pkg = monthlyPackage {
+                    if let pkg = weeklyPackage {
                         Task { await viewModel.purchasePackage(pkg) }
                     }
                 } label: {
-                    Text("Claim 50% Off")
+                    Text("Try for \(weeklyPackage?.storeProduct.localizedPriceString ?? "")/week")
                         .font(.headline)
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
