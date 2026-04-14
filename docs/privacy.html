@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Turby</title>
+  <meta name="description" content="Turby Privacy Policy. Learn how we handle your data.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+  <style>
+    :root {
+      --blue: #3B7BF6; --blue-light: #6B9EFF; --blue-dark: #1E56C4;
+      --bg: #0B0F1A; --bg-card: rgba(255,255,255,0.04); --bg-card-hover: rgba(255,255,255,0.07);
+      --text: #F1F3F8; --text-secondary: #8B92A8;
+      --border: rgba(255,255,255,0.08); --radius: 16px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+      color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--blue-light); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #fff; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(11,15,26,0.8); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.3px;
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-light));
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 18px; box-shadow: 0 4px 12px rgba(59,123,246,0.3);
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: var(--text-secondary); font-size: 15px; font-weight: 500; }
+    .nav-links a:hover { color: #fff; }
+
+    .legal-page { max-width: 720px; margin: 0 auto; padding: 60px 24px 80px; }
+    .legal-page h1 {
+      font-size: 40px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px;
+      background: linear-gradient(135deg, #fff, var(--blue-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .legal-page .last-updated { color: var(--text-secondary); font-size: 14px; margin-bottom: 40px; }
+    .legal-page h2 {
+      font-size: 22px; font-weight: 700; margin-top: 40px; margin-bottom: 14px;
+      letter-spacing: -0.3px; color: #fff;
+    }
+    .legal-page h3 { font-size: 18px; font-weight: 600; margin-top: 28px; margin-bottom: 10px; }
+    .legal-page p { font-size: 15px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.75; }
+    .legal-page ul, .legal-page ol {
+      margin: 12px 0 16px 24px; color: var(--text-secondary); font-size: 15px; line-height: 1.75;
+    }
+    .legal-page li { margin-bottom: 6px; }
+    .legal-page a { color: var(--blue-light); text-decoration: underline; text-decoration-color: rgba(107,158,255,0.3); }
+    .legal-page a:hover { text-decoration-color: var(--blue-light); }
+
+    .legal-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px 28px; margin: 20px 0;
+    }
+    .legal-card p { margin-bottom: 0; }
+
+    footer {
+      background: rgba(255,255,255,0.02); border-top: 1px solid var(--border); padding: 56px 24px 32px;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px;
+    }
+    .footer-brand p { font-size: 14px; color: var(--text-secondary); max-width: 300px; margin-top: 12px; line-height: 1.6; }
+    .footer-links { display: flex; gap: 56px; }
+    .footer-col h4 {
+      color: var(--text-secondary); font-size: 12px; font-weight: 700;
+      margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1.5px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a { color: var(--text-secondary); font-size: 14px; text-decoration: none; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom {
+      max-width: 1100px; margin: 40px auto 0; padding-top: 24px;
+      border-top: 1px solid var(--border); font-size: 13px;
+      text-align: center; color: var(--text-secondary);
+    }
+    @media (max-width: 640px) {
+      .nav-links { gap: 16px; } .nav-links a { font-size: 13px; }
+      .footer-inner { flex-direction: column; } .footer-links { flex-direction: column; gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><div class="logo-icon">✈</div> Turby</a>
+    <ul class="nav-links">
+      <li><a href="support.html">Support</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+      <li><a href="terms.html">Terms</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="legal-page">
+  <h1>Privacy Policy</h1>
+  <p class="last-updated">Last updated: April 10, 2025</p>
+
+  <p>Turby ("we", "our", or "us") operates the Turby mobile application (the "App"). This Privacy Policy explains how we collect, use, and protect your information when you use our App.</p>
+
+  <div class="legal-card">
+    <p><strong>Summary:</strong> Turby is designed with privacy in mind. We do not create user accounts, we do not collect personal data for advertising, and your flight searches stay on your device.</p>
+  </div>
+
+  <h2>1. Information We Collect</h2>
+
+  <h3>1.1 Information You Provide</h3>
+  <p>When you use Turby, you may voluntarily provide the following information, which is stored locally on your device:</p>
+  <ul>
+    <li><strong>First name</strong> — used to personalize the app experience</li>
+    <li><strong>Home airport preference</strong> — to improve flight search convenience</li>
+    <li><strong>Favorite airline preference</strong> — to personalize your experience</li>
+    <li><strong>Passenger type preference</strong> — to tailor turbulence information to your comfort level</li>
+    <li><strong>Flight search queries</strong> — flight numbers, airport codes, and dates you search for</li>
+  </ul>
+
+  <h3>1.2 Information Collected Automatically</h3>
+  <p>We do not collect analytics, device identifiers, or usage data ourselves. However, the following third-party services may collect limited information:</p>
+  <ul>
+    <li><strong>RevenueCat</strong> — processes in-app subscriptions. RevenueCat may collect an anonymous app user ID and purchase transaction data. See <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat's Privacy Policy</a>.</li>
+    <li><strong>Apple</strong> — the App Store and iOS may collect standard device and usage metrics as described in <a href="https://www.apple.com/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</li>
+  </ul>
+
+  <h3>1.3 Information We Do NOT Collect</h3>
+  <ul>
+    <li>We do not collect your location data</li>
+    <li>We do not collect contacts, photos, or other device data</li>
+    <li>We do not require or support user account registration</li>
+    <li>We do not use advertising SDKs or sell data to third parties</li>
+    <li>We do not use cookies or tracking technologies</li>
+  </ul>
+
+  <h2>2. How We Use Information</h2>
+  <p>The information you provide is used exclusively to:</p>
+  <ul>
+    <li>Look up flight data and weather conditions from third-party aviation APIs (AeroDataBox, NOAA, Open-Meteo)</li>
+    <li>Calculate and display turbulence forecasts for your searched flights</li>
+    <li>Personalize your in-app experience (name, preferences)</li>
+    <li>Store your flight search history locally for your convenience</li>
+    <li>Send local push notifications about upcoming flights (if you enable notifications)</li>
+    <li>Process subscription purchases through Apple's In-App Purchase system</li>
+  </ul>
+
+  <h2>3. Data Storage</h2>
+  <p>All personal preferences and flight history are stored <strong>locally on your device</strong> using iOS UserDefaults. This data is:</p>
+  <ul>
+    <li>Never transmitted to our servers</li>
+    <li>Never shared with third parties</li>
+    <li>Automatically removed when you delete the app</li>
+  </ul>
+
+  <h2>4. Third-Party Services</h2>
+  <p>Turby uses the following third-party services to provide its core functionality:</p>
+  <ul>
+    <li><strong>AeroDataBox API</strong> — to retrieve real-time flight status and schedule data. Only the flight number and date you search are sent. See <a href="https://www.aerodatabox.com/privacy-policy" target="_blank" rel="noopener">AeroDataBox Privacy Policy</a>.</li>
+    <li><strong>NOAA Aviation Weather Center</strong> — to fetch METARs, TAFs, SIGMETs, PIREPs, and G-AIRMETs. Only airport codes and geographic coordinates along flight routes are sent. This is a U.S. government public data service.</li>
+    <li><strong>Open-Meteo</strong> — to fetch wind and weather forecast data along flight routes. Only geographic coordinates are sent. See <a href="https://open-meteo.com/en/terms" target="_blank" rel="noopener">Open-Meteo Terms</a>.</li>
+    <li><strong>RevenueCat</strong> — to manage in-app subscriptions. See <a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat Privacy Policy</a>.</li>
+  </ul>
+
+  <h2>5. Children's Privacy</h2>
+  <p>Turby is not directed at children under 13 years of age. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us so we can take appropriate action.</p>
+
+  <h2>6. Data Retention</h2>
+  <p>Since all data is stored locally on your device, you have full control over your data at all times. You can:</p>
+  <ul>
+    <li>Clear your flight history within the app</li>
+    <li>Reset your preferences within the app's settings</li>
+    <li>Delete the app to remove all locally stored data</li>
+  </ul>
+
+  <h2>7. Security</h2>
+  <p>We take reasonable measures to protect the information processed through our App. All API communications use HTTPS encryption. Your data stored on-device benefits from iOS's built-in data protection and encryption.</p>
+
+  <h2>8. Your Rights</h2>
+  <p>Depending on your jurisdiction, you may have the following rights:</p>
+  <ul>
+    <li>The right to access the personal data we process about you</li>
+    <li>The right to request deletion of your data</li>
+    <li>The right to data portability</li>
+    <li>The right to withdraw consent</li>
+  </ul>
+  <p>Since we store data locally on your device and do not maintain server-side user profiles, you can exercise these rights directly by managing or deleting the app.</p>
+
+  <h2>9. Changes to This Policy</h2>
+  <p>We may update this Privacy Policy from time to time. When we do, we will update the "Last updated" date at the top. We encourage you to review this page periodically. Continued use of the App after changes constitutes acceptance of the updated policy.</p>
+
+  <h2>10. Contact Us</h2>
+  <p>If you have questions about this Privacy Policy or our data practices, please contact us at:</p>
+  <p><strong>Email:</strong> <a href="mailto:support@turby.app">support@turby.app</a></p>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo" style="font-size: 18px; gap: 8px; display: flex; align-items: center;">
+        <div class="logo-icon" style="width: 30px; height: 30px; font-size: 15px;">✈</div>
+        Turby
+      </div>
+      <p>Turbulence forecasts powered by real aviation weather data.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Use</a></li>
+          <li><a href="licenses.html">Licenses</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="support.html">Help Center</a></li>
+          <li><a href="mailto:support@turby.app">support@turby.app</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; 2025 Turby. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
