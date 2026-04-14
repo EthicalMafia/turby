@@ -5,9 +5,204 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Turby — Turbulence Forecast for Every Flight</title>
   <meta name="description" content="Know what to expect before you fly. Turby gives you real-time turbulence forecasts, flight-specific insights, and calm mode for nervous flyers.">
-  <base href="/">
-  <link rel="stylesheet" href="style.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+  <style>
+    :root {
+      --blue: #3B7BF6;
+      --blue-light: #6B9EFF;
+      --blue-dark: #1E56C4;
+      --bg: #0B0F1A;
+      --bg-card: rgba(255,255,255,0.04);
+      --bg-card-hover: rgba(255,255,255,0.07);
+      --text: #F1F3F8;
+      --text-secondary: #8B92A8;
+      --border: rgba(255,255,255,0.08);
+      --green: #34D399;
+      --orange: #FBBF24;
+      --red: #F87171;
+      --radius: 16px;
+      --glow: 0 0 80px rgba(59, 123, 246, 0.15);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--blue-light); text-decoration: none; transition: color 0.2s, opacity 0.2s; }
+    a:hover { color: #fff; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(11, 15, 26, 0.8);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 20px; font-weight: 700; color: #fff; letter-spacing: -0.3px;
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-light));
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 18px; box-shadow: 0 4px 12px rgba(59,123,246,0.3);
+    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: var(--text-secondary); font-size: 15px; font-weight: 500; }
+    .nav-links a:hover { color: #fff; opacity: 1; }
+
+    /* HERO */
+    .hero {
+      max-width: 1100px; margin: 0 auto; padding: 100px 24px 80px;
+      text-align: center; position: relative;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(59,123,246,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero h1 {
+      font-size: clamp(42px, 6vw, 72px); font-weight: 800;
+      letter-spacing: -2px; line-height: 1.05; margin-bottom: 24px;
+      background: linear-gradient(135deg, #fff 0%, var(--blue-light) 50%, var(--blue) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero p {
+      font-size: 19px; color: var(--text-secondary); max-width: 560px;
+      margin: 0 auto 40px; line-height: 1.7;
+    }
+    .badge-row {
+      display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 48px;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 18px; border-radius: 100px;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.2px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .dot.green { background: var(--green); box-shadow: 0 0 8px rgba(52,211,153,0.4); }
+    .dot.blue { background: var(--blue); box-shadow: 0 0 8px rgba(59,123,246,0.4); }
+    .dot.orange { background: var(--orange); box-shadow: 0 0 8px rgba(251,191,36,0.4); }
+
+    .app-store-btn {
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 18px 36px; background: #fff; color: #000;
+      border-radius: 14px; font-size: 17px; font-weight: 700;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(255,255,255,0.1);
+    }
+    .app-store-btn:hover {
+      transform: translateY(-2px); color: #000;
+      box-shadow: 0 8px 32px rgba(255,255,255,0.15);
+    }
+    .app-store-btn svg { width: 24px; height: 24px; }
+
+    /* FEATURES */
+    .features { max-width: 1100px; margin: 0 auto; padding: 40px 24px 100px; }
+    .features h2 {
+      text-align: center; font-size: 36px; font-weight: 800;
+      letter-spacing: -1px; margin-bottom: 16px;
+    }
+    .features > p.subtitle {
+      text-align: center; color: var(--text-secondary); font-size: 17px;
+      max-width: 480px; margin: 0 auto 56px;
+    }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;
+    }
+    .feature-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 32px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px); background: var(--bg-card-hover);
+      box-shadow: var(--glow);
+    }
+    .feature-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin-bottom: 20px;
+    }
+    .feature-card h3 {
+      font-size: 18px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.2px;
+    }
+    .feature-card p { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* TURBULENCE SCALE */
+    .scale-section { max-width: 1100px; margin: 0 auto; padding: 0 24px 100px; }
+    .scale-section h2 {
+      text-align: center; font-size: 36px; font-weight: 800;
+      letter-spacing: -1px; margin-bottom: 12px;
+    }
+    .scale-section > p {
+      text-align: center; color: var(--text-secondary); font-size: 17px; margin-bottom: 48px;
+    }
+    .scale-bar {
+      display: flex; border-radius: var(--radius); overflow: hidden;
+      height: 72px; margin-bottom: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .seg {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 15px; letter-spacing: 0.5px;
+    }
+    .scale-labels {
+      display: flex; justify-content: space-around;
+      font-size: 14px; font-weight: 600; color: var(--text-secondary);
+    }
+
+    /* FOOTER */
+    footer {
+      background: rgba(255,255,255,0.02); border-top: 1px solid var(--border);
+      padding: 56px 24px 32px;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px;
+    }
+    .footer-brand p { font-size: 14px; color: var(--text-secondary); max-width: 300px; margin-top: 12px; line-height: 1.6; }
+    .footer-links { display: flex; gap: 56px; }
+    .footer-col h4 {
+      color: var(--text-secondary); font-size: 12px; font-weight: 700;
+      margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1.5px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a { color: var(--text-secondary); font-size: 14px; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom {
+      max-width: 1100px; margin: 40px auto 0; padding-top: 24px;
+      border-top: 1px solid var(--border); font-size: 13px;
+      text-align: center; color: var(--text-secondary);
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { gap: 16px; }
+      .nav-links a { font-size: 13px; }
+      .hero { padding: 60px 20px 50px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; }
+      .footer-links { flex-direction: column; gap: 28px; }
+      .seg { font-size: 12px; }
+      .scale-bar { height: 56px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -41,34 +236,35 @@
 
 <section class="features">
   <h2>Everything you need to fly calm</h2>
+  <p class="subtitle">Real aviation data meets a beautiful, anxiety-free experience.</p>
   <div class="features-grid">
     <div class="feature-card">
-      <div class="feature-icon" style="background: rgba(52, 198, 138, 0.12); color: #34C68A;">⚡</div>
+      <div class="feature-icon" style="background: rgba(52,211,153,0.1); color: #34D399;">⚡</div>
       <h3>Real-Time Turbulence Score</h3>
-      <p>Get a 0-10 turbulence score for any flight based on live aviation weather data from NOAA and global weather services.</p>
+      <p>Get a 0–10 turbulence score for any flight based on live aviation weather data from NOAA and global weather services.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon" style="background: rgba(64, 120, 217, 0.12); color: #4078D9;">🗺</div>
+      <div class="feature-icon" style="background: rgba(59,123,246,0.1); color: #6B9EFF;">🗺</div>
       <h3>Route Visualization</h3>
       <p>See exactly where turbulence is expected along your route. Color-coded waypoints show smooth, bumpy, and rough segments.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon" style="background: rgba(242, 169, 48, 0.12); color: #F2A930;">📊</div>
+      <div class="feature-icon" style="background: rgba(251,191,36,0.1); color: #FBBF24;">📊</div>
       <h3>Phase-by-Phase Breakdown</h3>
       <p>Takeoff, climb, cruise, descent, landing — each phase gets its own forecast so you know exactly when to expect bumps.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon" style="background: rgba(148, 103, 211, 0.12); color: #9467D3;">🧘</div>
+      <div class="feature-icon" style="background: rgba(167,139,250,0.1); color: #A78BFA;">🧘</div>
       <h3>Calm Mode</h3>
       <p>Nervous flyer? Calm Mode gives you breathing exercises, reassuring facts, and gentle guidance to help you relax.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon" style="background: rgba(236, 72, 72, 0.12); color: #EC4848;">🔔</div>
+      <div class="feature-icon" style="background: rgba(248,113,113,0.1); color: #F87171;">🔔</div>
       <h3>Flight Reminders</h3>
       <p>Get notified before your flight with an updated turbulence forecast so you're always prepared.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon" style="background: rgba(64, 120, 217, 0.12); color: #4078D9;">💺</div>
+      <div class="feature-icon" style="background: rgba(59,123,246,0.1); color: #6B9EFF;">💺</div>
       <h3>Best Seat Advice</h3>
       <p>Learn which seats minimize turbulence feel based on aircraft type and expected conditions.</p>
     </div>
@@ -79,10 +275,10 @@
   <h2>The Turby Turbulence Scale</h2>
   <p>From glass-smooth to hold-on-tight — we make it simple.</p>
   <div class="scale-bar">
-    <div class="seg" style="background: #34C68A;">0–2</div>
-    <div class="seg" style="background: #F2BF20;">3–4</div>
-    <div class="seg" style="background: #F28030;">5–7</div>
-    <div class="seg" style="background: #EC4848;">8–10</div>
+    <div class="seg" style="background: #34D399;">0–2</div>
+    <div class="seg" style="background: #FBBF24; color: #1a1a1a;">3–4</div>
+    <div class="seg" style="background: #F97316;">5–7</div>
+    <div class="seg" style="background: #EF4444;">8–10</div>
   </div>
   <div class="scale-labels">
     <span>Smooth</span>
@@ -95,7 +291,7 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <div class="logo" style="color: #fff; font-size: 18px; gap: 8px; display: flex; align-items: center;">
+      <div class="logo" style="font-size: 18px; gap: 8px; display: flex; align-items: center;">
         <div class="logo-icon" style="width: 30px; height: 30px; font-size: 15px;">✈</div>
         Turby
       </div>
